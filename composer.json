@@ -14,7 +14,9 @@
             "homepage": "https://github.com/JanStanleyWatt"
         }
     ],
-    "support": {},
+    "support": {
+        "issues": "https://github.com/JanStanleyWatt/danraku/issues"
+    },
     "license": "Apache-2.0",
     "readme": "README.md",
     "require": {},
