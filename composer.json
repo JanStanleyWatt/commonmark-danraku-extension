@@ -1,0 +1,36 @@
+{
+    "name": "jsw/danraku",
+    "keywords": [
+        "markdown",
+        "extension",
+        "md",
+        "commonmark"
+    ],
+    "description": "League/commonmark extension for japanese danraku style.",
+    "authors": [
+        {
+            "name": "Jan Stanray Watt",
+            "email": "github@mail.whojinn.com",
+            "homepage": "https://github.com/JanStanleyWatt"
+        }
+    ],
+    "support": {},
+    "license": "Apache-2.0",
+    "readme": "README.md",
+    "require": {},
+    "require-dev": {
+        "league/commonmark": "^2.3",
+        "phpunit/phpunit": "^9.5",
+        "friendsofphp/php-cs-fixer": "^3.14"
+    },
+    "autoload": {
+        "psr-4": {
+            "JSW\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "JSW\\Test\\": "test/"
+        }
+    }
+}
