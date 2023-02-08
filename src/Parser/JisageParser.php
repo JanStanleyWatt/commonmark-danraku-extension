@@ -48,8 +48,8 @@ class JisageParser implements InlineParserInterface, ConfigurationAwareInterface
 
     public function parse(InlineParserContext $inline_context): bool
     {
-        $ignore_alphabet = $this->config->get('danraku/ignore_alphabet');
-        $ignore_dash = $this->config->get('danraku/ignore_dash');
+        $ignore_alphabet = $this->config->get('jisage/ignore_alphabet');
+        $ignore_dash = $this->config->get('jisage/ignore_dash');
 
         $cursor = $inline_context->getCursor();
         $now_char = $cursor->getCurrentCharacter();

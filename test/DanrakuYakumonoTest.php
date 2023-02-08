@@ -35,10 +35,12 @@ use PHPUnit\Framework\TestCase;
 class DanrakuYakumonoTest extends TestCase
 {
     private const DEFAULT_RULE = [
-        'danraku' => [
+        'jisage' => [
             'ignore_alphabet' => false,
             'ignore_dash' => true,
-            'spacing_yakumono' => true,
+        ],
+        'yakumono' => [
+            'spacing_yakumono' => true, 
             'byte_sensitive' => true,
         ],
     ];
@@ -144,7 +146,7 @@ class DanrakuYakumonoTest extends TestCase
     public function testConfigIgnoreHankaku(): void
     {
         $rules = [
-            'danraku' => [
+            'yakumono' => [
                 'spacing_yakumono' => false,
             ],
         ];
@@ -174,7 +176,7 @@ class DanrakuYakumonoTest extends TestCase
     public function testConfigIgnoreZenkaku(): void
     {
         $rules = [
-            'danraku' => [
+            'yakumono' => [
                 'spacing_yakumono' => false,
             ],
         ];
@@ -204,7 +206,7 @@ class DanrakuYakumonoTest extends TestCase
     public function testConfigNonByteSensitive(): void
     {
         $rules = [
-            'danraku' => [
+            'yakumono' => [
                 'byte_sensitive' => false,
             ],
         ];

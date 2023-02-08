@@ -44,7 +44,7 @@ class YakumonoParser implements InlineParserInterface, ConfigurationAwareInterfa
     public function parse(InlineParserContext $inline_context): bool
     {
         // 設定でオフになっていたらその時点でfalse
-        if (!$this->config->get('danraku/spacing_yakumono')) {
+        if (!$this->config->get('yakumono/spacing_yakumono')) {
             return false;
         }
 
@@ -61,7 +61,7 @@ class YakumonoParser implements InlineParserInterface, ConfigurationAwareInterfa
             return false;
         }
 
-        if ($this->config->get('danraku/byte_sensitive')
+        if ($this->config->get('yakumono/byte_sensitive')
         && 1 === mb_strwidth($now_char)) {
             $cursor->advance();
             $inline_context->getContainer()->appendChild(new Text($now_char.' '));
