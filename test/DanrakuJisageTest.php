@@ -318,6 +318,37 @@ class DanrakuJisageTest extends TestCase
         $this->assertSame($expect, $actual);
     }
 
+        /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testIgnoreCodeBlock(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = <<<EOL
+        <pre><code>この拡張機能は素晴らしい
+        </code></pre>
+        
+        EOL;
+
+        $actual_text = <<<EOL
+        ```
+        この拡張機能は素晴らしい
+        ```
+        EOL;
+
+        $actual = $converter->convert($actual_text)->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
+    
     /**
      * @depends testDefaultJisageJapanese
      *
