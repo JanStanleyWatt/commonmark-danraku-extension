@@ -14,7 +14,9 @@
             "homepage": "https://github.com/JanStanleyWatt"
         }
     ],
-    "support": {},
+    "support": {
+        "issues": "https://github.com/JanStanleyWatt/danraku/issues"
+    },
     "license": "Apache-2.0",
     "readme": "README.md",
     "require": {},
@@ -23,9 +25,21 @@
         "phpunit/phpunit": "^9.5",
         "friendsofphp/php-cs-fixer": "^3.14"
     },
+    "scripts": {
+        "test": [
+            "./vendor/bin/phpunit"
+        ],
+        "test-jisage": [
+            "./vendor/bin/phpunit --group=jisage"
+        ]
+    },
+    "scripts-descriptions": {
+        "test": "Run all tests",
+        "test-jisage": "Run tests of `JisageParser.php`"
+    },
     "autoload": {
         "psr-4": {
-            "JSW\\": "src/"
+            "JSW\\Danraku\\": "src/"
         }
     },
     "autoload-dev": {

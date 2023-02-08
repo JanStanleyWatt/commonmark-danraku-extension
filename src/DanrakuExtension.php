@@ -2,7 +2,7 @@
 
 /**
  * Copyright 2023 Jan stanray watt
- 
+
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -17,9 +17,10 @@
  */
 
 declare(strict_types=1);
-
 namespace JSW\Danraku;
 
+use JSW\Danraku\Parser\JisageParser;
+use JSW\Danraku\Parser\YakumonoParser;
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\Config\ConfigurationBuilderInterface;
@@ -46,5 +47,7 @@ class DanrakuExtension implements ConfigurableExtensionInterface
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
+        $environment->addInlineParser(new JisageParser())
+                    ->addInlineParser(new YakumonoParser());
     }
 }

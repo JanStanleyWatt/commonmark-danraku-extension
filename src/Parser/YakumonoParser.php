@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace Whojinn\Danraku\Parser;
+namespace JSW\Danraku\Parser;
 
 use League\CommonMark\Node\Inline\Text;
 use League\CommonMark\Parser\Inline\InlineParserInterface;
