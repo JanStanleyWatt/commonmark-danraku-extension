@@ -30,7 +30,7 @@ use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 
 /**
- * 段落処理のメインパーサ。処理の優先順位は90以上にすること(EscapableParserとの兼ね合いのため).
+ * 段落処理のメインパーサ。処理の優先順位は160以上にすること(BacktickParserとの兼ね合いのため).
  */
 class JisageParser implements InlineParserInterface, ConfigurationAwareInterface
 {
