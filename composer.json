@@ -26,7 +26,16 @@
         "friendsofphp/php-cs-fixer": "^3.14"
     },
     "scripts": {
-        "test": "./vendor/bin/phpunit --color test"
+        "test": [
+            "./vendor/bin/phpunit"
+        ],
+        "test-jisage": [
+            "./vendor/bin/phpunit --group=jisage"
+        ]
+    },
+    "scripts-descriptions": {
+        "test": "Run all tests",
+        "test-jisage": "Run tests of `JisageParser.php`"
     },
     "autoload": {
         "psr-4": {
