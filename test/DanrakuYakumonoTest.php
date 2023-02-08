@@ -86,4 +86,142 @@ class DanrakuYakumonoTest extends TestCase
         $this->assertSame($expect_1, $actual_1, 'Failed by Japanese.');
         $this->assertSame($expect_2, $actual_2, 'Failed by English.');
     }
+
+    /**
+     * @depends testDefaultYakumonoHankaku
+     *
+     * @covers ::parse
+     */
+    public function testEscapeAlreadyHankaku(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect_1 = '<p>　この拡張機能は素晴らしい! 異論はないよね? うん</p>'."\n";
+        $actual_1 = $converter->convert('この拡張機能は素晴らしい! 異論はないよね? うん')->getContent();
+
+        $expect_2 = '<p>　This Extension is awesome! Do you have any question? ok.</p>'."\n";
+        $actual_2 = $converter->convert('This Extension is awesome! Do you have any question? ok.')->getContent();
+
+        $this->assertSame($expect_1, $actual_1, 'Failed by Japanese.');
+        $this->assertSame($expect_2, $actual_2, 'Failed by English.');
+    }
+
+    /**
+     * @depends testDefaultYakumonoZenkaku
+     *
+     * @covers ::parse
+     */
+    public function testEscapeAlreadyZenkaku(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect_1 = '<p>　この拡張機能は素晴らしい！　異論はないよね？　うん</p>'."\n";
+        $actual_1 = $converter->convert('この拡張機能は素晴らしい！　異論はないよね？　うん')->getContent();
+
+        $expect_2 = '<p>　This Extension is awesome！　Do you have any question？　ok.</p>'."\n";
+        $actual_2 = $converter->convert('This Extension is awesome！　Do you have any question？　ok.')->getContent();
+
+        $this->assertSame($expect_1, $actual_1, 'Failed by Japanese.');
+        $this->assertSame($expect_2, $actual_2, 'Failed by English.');
+    }
+
+    /**
+     * @depends testDefaultYakumonoHankaku
+     *
+     * @covers ::parse
+     * @covers \JSW\Danraku\DanrakuExtension::configureSchema
+     */
+    public function testConfigIgnoreHankaku(): void
+    {
+        $rules = [
+            'danraku' => [
+                'spacing_yakumono' => false,
+            ],
+        ];
+        $environment = new Environment($rules);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect_1 = '<p>　この拡張機能は素晴らしい!異論はないよね?うん</p>'."\n";
+        $actual_1 = $converter->convert('この拡張機能は素晴らしい!異論はないよね?うん')->getContent();
+
+        $expect_2 = '<p>　This Extension is awesome!Do you have any question?ok.</p>'."\n";
+        $actual_2 = $converter->convert('This Extension is awesome!Do you have any question?ok.')->getContent();
+
+        $this->assertSame($expect_1, $actual_1, 'Failed by Japanese.');
+        $this->assertSame($expect_2, $actual_2, 'Failed by English.');
+    }
+
+    /**
+     * @depends testDefaultYakumonoZenkaku
+     *
+     * @covers ::parse
+     * @covers \JSW\Danraku\DanrakuExtension::configureSchema
+     */
+    public function testConfigIgnoreZenkaku(): void
+    {
+        $rules = [
+            'danraku' => [
+                'spacing_yakumono' => false,
+            ],
+        ];
+        $environment = new Environment($rules);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect_1 = '<p>　この拡張機能は素晴らしい！異論はないよね？うん</p>'."\n";
+        $actual_1 = $converter->convert('この拡張機能は素晴らしい！異論はないよね？うん')->getContent();
+
+        $expect_2 = '<p>　This Extension is awesome！Do you have any question？ok.</p>'."\n";
+        $actual_2 = $converter->convert('This Extension is awesome！Do you have any question？ok.')->getContent();
+
+        $this->assertSame($expect_1, $actual_1, 'Failed by Japanese.');
+        $this->assertSame($expect_2, $actual_2, 'Failed by English.');
+    }
+
+    /**
+     * @depends testDefaultYakumonoHankaku
+     *
+     * @covers ::parse
+     * @covers \JSW\Danraku\DanrakuExtension::configureSchema
+     */
+    public function testConfigNonByteSensitive(): void
+    {
+        $rules = [
+            'danraku' => [
+                'byte_sensitive' => false,
+            ],
+        ];
+        $environment = new Environment($rules);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect_1 = '<p>　この拡張機能は素晴らしい!　異論はないよね?　うん</p>'."\n";
+        $actual_1 = $converter->convert('この拡張機能は素晴らしい!異論はないよね?うん')->getContent();
+
+        $expect_2 = '<p>　This Extension is awesome!　Do you have any question?　ok.</p>'."\n";
+        $actual_2 = $converter->convert('This Extension is awesome!Do you have any question?ok.')->getContent();
+
+        $this->assertSame($expect_1, $actual_1, 'Failed by Japanese.');
+        $this->assertSame($expect_2, $actual_2, 'Failed by English.');
+    }
 }
