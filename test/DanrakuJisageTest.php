@@ -228,4 +228,24 @@ class DanrakuJisageTest extends TestCase
         $this->assertSame($expect_5, $actual_5, 'Failed by <h5>');
         $this->assertSame($expect_6, $actual_6, 'Failed by <h6>');
     }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testMergeInlineLink(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect_1 = '<p>　<a href="www.example.com">この拡張機能は素晴らしい</a></p>'."\n";
+        $actual_1 = $converter->convert('[この拡張機能は素晴らしい](www.example.com)')->getContent();
+
+        $this->assertSame($expect_1, $actual_1);
+    }
 }
