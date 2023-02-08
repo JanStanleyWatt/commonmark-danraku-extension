@@ -34,12 +34,16 @@
         ],
         "test-yakumono": [
             "./vendor/bin/phpunit --group=yakumono"
+        ],
+        "test-gfm": [
+            "./vendor/bin/phpunit --group=gfm"
         ]
     },
     "scripts-descriptions": {
         "test": "Run all tests",
         "test-jisage": "Run tests of `JisageParser.php`",
-        "test-yakumono": "Run tests of `YakumonoParser.php`"
+        "test-yakumono": "Run tests of `YakumonoParser.php`",
+        "test-gfm": "Run tests for alignment to Github Flavored Marddown extension"
     },
     "autoload": {
         "psr-4": {
