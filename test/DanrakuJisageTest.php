@@ -35,10 +35,12 @@ use PHPUnit\Framework\TestCase;
 class DanrakuJisageTest extends TestCase
 {
     private const DEFAULT_RULE = [
-        'danraku' => [
+        'jisage' => [
             'ignore_alphabet' => false,
             'ignore_dash' => true,
-            'spacing_yakumono' => true,
+        ],
+        'yakumono' => [
+            'spacing_yakumono' => true, 
             'byte_sensitive' => true,
         ],
     ];
@@ -88,7 +90,7 @@ class DanrakuJisageTest extends TestCase
     public function testJisageConfigIgnoreAlphabetTrue(): void
     {
         $rules = [
-            'danraku' => [
+            'jisage' => [
                 'ignore_alphabet' => true,
             ],
         ];
@@ -116,7 +118,7 @@ class DanrakuJisageTest extends TestCase
     public function testJisageConfigIgnoreDashFalse(): void
     {
         $rules = [
-            'danraku' => [
+            'jisage' => [
                 'ignore_dash' => false,
             ],
         ];

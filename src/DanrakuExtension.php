@@ -32,14 +32,19 @@ class DanrakuExtension implements ConfigurableExtensionInterface
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
         $builder->addSchema(
-            'danraku',
+            'jisage',
             Expect::structure([
                 // trueにすると、行頭が英単語だった場合には字下げをしなくなる
                 'ignore_alphabet' => Expect::bool()->default(false),
 
                 // trueにすると、全角ダッシュ（―）で字下げをしなくなる
                 'ignore_dash' => Expect::bool()->default(true),
-
+            ])
+        );
+        
+        $builder->addSchema(
+            'yakumono',
+            Expect::structure([
                 // trueにすると、「？」と「！」の前に全角スペースを空けるようになる(閉じ括弧の直前を除く)
                 'spacing_yakumono' => Expect::bool()->default(true),
 
