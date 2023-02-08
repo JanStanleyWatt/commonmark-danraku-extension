@@ -39,6 +39,7 @@ class DanrakuJisageTest extends TestCase
             'ignore_alphabet' => false,
             'ignore_dash' => true,
             'spacing_yakumono' => true,
+            'byte_sensitive' => true
         ],
     ];
     

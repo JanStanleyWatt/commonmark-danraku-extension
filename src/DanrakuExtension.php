@@ -17,6 +17,7 @@
  */
 
 declare(strict_types=1);
+
 namespace JSW\Danraku;
 
 use JSW\Danraku\Parser\JisageParser;
@@ -41,6 +42,9 @@ class DanrakuExtension implements ConfigurableExtensionInterface
 
                 // trueにすると、「？」と「！」の前に全角スペースを空けるようになる(閉じ括弧の直前を除く)
                 'spacing_yakumono' => Expect::bool()->default(true),
+
+                // trueにすると、全角「？」「！」の場合は全角スペースを、半角「!」「?」の場合は半角スペースを挿入するようになる
+                'byte_sensitive' => Expect::bool()->default(true),
             ])
         );
     }

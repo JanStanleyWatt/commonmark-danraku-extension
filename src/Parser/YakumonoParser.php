@@ -53,10 +53,20 @@ class YakumonoParser implements InlineParserInterface, ConfigurationAwareInterfa
         $next_char = $cursor->peek();
         $is_null = (null === $now_char || null === $next_char);
         $is_bang = ('!' === $now_char && '[' === $next_char);
+        $already = (' ' === $next_char || '　' === $next_char);
 
         // 飛ばす必要が無い、または飛ばせない場合はfalse
-        if ($is_null || $is_bang || mb_ereg('\p{Pe}|\n|\s|[?!？！]', $next_char)) {
+        if ($is_null || $is_bang || $already
+        || mb_ereg('\p{Pe}|\n|\s|[?!？！]', $next_char)) {
             return false;
+        }
+
+        if ($this->config->get('danraku/byte_sensitive')
+        && 1 === mb_strwidth($now_char)) {
+            $cursor->advance();
+            $inline_context->getContainer()->appendChild(new Text($now_char.' '));
+
+            return true;
         }
 
         $cursor->advance();
