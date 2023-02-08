@@ -17,6 +17,7 @@
  */
 
 declare(strict_types=1);
+
 namespace JSW\Danraku\Parser;
 
 use League\CommonMark\Node\Block\Document;
@@ -29,7 +30,7 @@ use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 
 /**
- * 段落処理のメインパーサ。処理の優先順位は90以上にすること(EscapeParserとの兼ね合いのため)
+ * 段落処理のメインパーサ。処理の優先順位は90以上にすること(EscapableParserとの兼ね合いのため).
  */
 class JisageParser implements InlineParserInterface, ConfigurationAwareInterface
 {
@@ -54,7 +55,7 @@ class JisageParser implements InlineParserInterface, ConfigurationAwareInterface
         $now_char = $cursor->getCurrentCharacter();
         $container = $inline_context->getContainer();
 
-        if ('-' === $now_char && ' ' !== $cursor->peek()) {
+        if ('-' === $now_char) {
             $cursor->advance();
 
             return true;

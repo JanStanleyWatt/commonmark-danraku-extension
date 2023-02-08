@@ -51,7 +51,7 @@ class DanrakuExtension implements ConfigurableExtensionInterface
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
-        $environment->addInlineParser(new JisageParser())
+        $environment->addInlineParser(new JisageParser(), 90)
                     ->addInlineParser(new YakumonoParser());
     }
 }
