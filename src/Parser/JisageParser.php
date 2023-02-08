@@ -55,10 +55,16 @@ class JisageParser implements InlineParserInterface, ConfigurationAwareInterface
         $now_char = $cursor->getCurrentCharacter();
         $container = $inline_context->getContainer();
 
+        // エスケープ記号
         if ('-' === $now_char) {
             $cursor->advance();
 
             return true;
+        }
+
+        // imgタグには段落の字下げを入れない
+        if ('!' === $now_char && '[' === $cursor->peek()) {
+            return false;
         }
 
         if ($ignore_alphabet && mb_ereg_match('[a-zA-Z0-9]', $now_char)) {
