@@ -31,11 +31,15 @@
         ],
         "test-jisage": [
             "./vendor/bin/phpunit --group=jisage"
+        ],
+        "test-yakumono": [
+            "./vendor/bin/phpunit --group=yakumono"
         ]
     },
     "scripts-descriptions": {
         "test": "Run all tests",
-        "test-jisage": "Run tests of `JisageParser.php`"
+        "test-jisage": "Run tests of `JisageParser.php`",
+        "test-yakumono": "Run tests of `YakumonoParser.php`"
     },
     "autoload": {
         "psr-4": {
