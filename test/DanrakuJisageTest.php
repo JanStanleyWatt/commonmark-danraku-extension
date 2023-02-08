@@ -318,7 +318,7 @@ class DanrakuJisageTest extends TestCase
         $this->assertSame($expect, $actual);
     }
 
-        /**
+    /**
      * @depends testDefaultJisageJapanese
      *
      * @covers ::parse
@@ -348,7 +348,7 @@ class DanrakuJisageTest extends TestCase
 
         $this->assertSame($expect, $actual);
     }
-    
+
     /**
      * @depends testDefaultJisageJapanese
      *
@@ -365,6 +365,26 @@ class DanrakuJisageTest extends TestCase
 
         $expect = '<p>　<a href="www.example.com">この拡張機能は素晴らしい</a></p>'."\n";
         $actual = $converter->convert('[この拡張機能は素晴らしい](www.example.com)')->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testMergeInlineCode(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = '<p>　<code>この拡張機能は素晴らしい</code></p>'."\n";
+        $actual = $converter->convert('`この拡張機能は素晴らしい`')->getContent();
 
         $this->assertSame($expect, $actual);
     }
