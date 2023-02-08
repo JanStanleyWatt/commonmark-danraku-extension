@@ -51,7 +51,8 @@ class DanrakuExtension implements ConfigurableExtensionInterface
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
-        $environment->addInlineParser(new JisageParser())
+        //JisageParserの優先順位は160以上にすること(BacktickParserとの兼ね合いのため)
+        $environment->addInlineParser(new JisageParser(), 160)
                     ->addInlineParser(new YakumonoParser());
     }
 }

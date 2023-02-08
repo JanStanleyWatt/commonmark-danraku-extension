@@ -39,10 +39,10 @@ class DanrakuJisageTest extends TestCase
             'ignore_alphabet' => false,
             'ignore_dash' => true,
             'spacing_yakumono' => true,
-            'byte_sensitive' => true
+            'byte_sensitive' => true,
         ],
     ];
-    
+
     /**
      * @covers ::parse
      */
@@ -81,6 +81,7 @@ class DanrakuJisageTest extends TestCase
 
     /**
      * @depends testDefaultJisageEnglish
+     *
      * @covers ::parse
      * @covers \JSW\Danraku\DanrakuExtension::configureSchema
      */
@@ -108,6 +109,7 @@ class DanrakuJisageTest extends TestCase
     /**
      * @depends testDefaultJisageEnglish
      * @depends testDefaultJisageJapanese
+     *
      * @covers ::parse
      * @covers \JSW\Danraku\DanrakuExtension::configureSchema
      */
@@ -131,14 +133,15 @@ class DanrakuJisageTest extends TestCase
 
         $expect_2 = '<p>　―This Extension is awesome</p>'."\n";
         $actual_2 = $converter->convert('―This Extension is awesome')->getContent();
-        
-        $this->assertSame($expect_1, $actual_1, "Failed by Japanese");
-        $this->assertSame($expect_2, $actual_2, "Failed by English");
+
+        $this->assertSame($expect_1, $actual_1, 'Failed by Japanese');
+        $this->assertSame($expect_2, $actual_2, 'Failed by English');
     }
-    
+
     /**
      * @depends testDefaultJisageEnglish
      * @depends testDefaultJisageJapanese
+     *
      * @covers ::parse
      * @covers \JSW\Danraku\DanrakuExtension::configureSchema
      */
@@ -156,13 +159,14 @@ class DanrakuJisageTest extends TestCase
 
         $expect_2 = '<p>This Extension is awesome</p>'."\n";
         $actual_2 = $converter->convert('-This Extension is awesome')->getContent();
-        
-        $this->assertSame($expect_1, $actual_1, "Failed by Japanese");
-        $this->assertSame($expect_2, $actual_2, "Failed by English");
+
+        $this->assertSame($expect_1, $actual_1, 'Failed by Japanese');
+        $this->assertSame($expect_2, $actual_2, 'Failed by English');
     }
-    
+
     /**
      * @depends testJisageEscape
+     *
      * @covers ::parse
      * @covers \JSW\Danraku\DanrakuExtension::configureSchema
      */
@@ -180,8 +184,228 @@ class DanrakuJisageTest extends TestCase
 
         $expect_2 = '<p>　-This Extension is awesome</p>'."\n";
         $actual_2 = $converter->convert('\-This Extension is awesome')->getContent();
+
+        $this->assertSame($expect_1, $actual_1, 'Failed by Japanese');
+        $this->assertSame($expect_2, $actual_2, 'Failed by English');
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testIgnoreBlockHead(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect_1 = '<h1>この拡張機能は素晴らしい</h1>'."\n";
+        $actual_1 = $converter->convert('# この拡張機能は素晴らしい')->getContent();
+
+        $expect_2 = '<h2>この拡張機能は素晴らしい</h2>'."\n";
+        $actual_2 = $converter->convert('## この拡張機能は素晴らしい')->getContent();
+
+        $expect_3 = '<h3>この拡張機能は素晴らしい</h3>'."\n";
+        $actual_3 = $converter->convert('### この拡張機能は素晴らしい')->getContent();
+
+        $expect_4 = '<h4>この拡張機能は素晴らしい</h4>'."\n";
+        $actual_4 = $converter->convert('#### この拡張機能は素晴らしい')->getContent();
+
+        $expect_5 = '<h5>この拡張機能は素晴らしい</h5>'."\n";
+        $actual_5 = $converter->convert('##### この拡張機能は素晴らしい')->getContent();
+
+        $expect_6 = '<h6>この拡張機能は素晴らしい</h6>'."\n";
+        $actual_6 = $converter->convert('###### この拡張機能は素晴らしい')->getContent();
+
+        $this->assertSame($expect_1, $actual_1, 'Failed by <h1>');
+        $this->assertSame($expect_2, $actual_2, 'Failed by <h2>');
+        $this->assertSame($expect_3, $actual_3, 'Failed by <h3>');
+        $this->assertSame($expect_4, $actual_4, 'Failed by <h4>');
+        $this->assertSame($expect_5, $actual_5, 'Failed by <h5>');
+        $this->assertSame($expect_6, $actual_6, 'Failed by <h6>');
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testIgnoreBlockQuote(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = <<<EOL
+        <blockquote>
+        <p>この拡張機能は素晴らしい</p>
+        </blockquote>
         
-        $this->assertSame($expect_1, $actual_1, "Failed by Japanese");
-        $this->assertSame($expect_2, $actual_2, "Failed by English");
+        EOL;
+        $actual = $converter->convert('>この拡張機能は素晴らしい')->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testIgnoreBlockList(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = <<<EOL
+        <ul>
+        <li>この拡張機能は</li>
+        <li>素晴らしい</li>
+        </ul>
+        
+        EOL;
+
+        $actual_text = <<<EOL
+        - この拡張機能は
+        - 素晴らしい
+        EOL;
+
+        $actual = $converter->convert($actual_text)->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testIgnoreBlockNumberingList(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = <<<EOL
+        <ol>
+        <li>この拡張機能は</li>
+        <li>素晴らしい</li>
+        </ol>
+        
+        EOL;
+
+        $actual_text = <<<EOL
+        1. この拡張機能は
+        1. 素晴らしい
+        EOL;
+
+        $actual = $converter->convert($actual_text)->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testIgnoreCodeBlock(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = <<<EOL
+        <pre><code>この拡張機能は素晴らしい
+        </code></pre>
+        
+        EOL;
+
+        $actual_text = <<<EOL
+        ```
+        この拡張機能は素晴らしい
+        ```
+        EOL;
+
+        $actual = $converter->convert($actual_text)->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testMergeInlineLink(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = '<p>　<a href="www.example.com">この拡張機能は素晴らしい</a></p>'."\n";
+        $actual = $converter->convert('[この拡張機能は素晴らしい](www.example.com)')->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testMergeInlineCode(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = '<p>　<code>この拡張機能は素晴らしい</code></p>'."\n";
+        $actual = $converter->convert('`この拡張機能は素晴らしい`')->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testIgnoreInlineImage(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = '<p><img src="img/example.png" alt="この拡張機能は素晴らしい" /></p>'."\n";
+        $actual = $converter->convert('![この拡張機能は素晴らしい](img/example.png)')->getContent();
+
+        $this->assertSame($expect, $actual);
     }
 }
