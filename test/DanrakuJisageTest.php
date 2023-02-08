@@ -248,4 +248,24 @@ class DanrakuJisageTest extends TestCase
 
         $this->assertSame($expect_1, $actual_1);
     }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
+    public function testIgnoreInlineImage(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = '<p><img src="img/example.png" alt="この拡張機能は素晴らしい" /></p>'."\n";
+        $actual = $converter->convert('![この拡張機能は素晴らしい](img/example.png)')->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
 }
