@@ -259,6 +259,38 @@ class DanrakuJisageTest extends TestCase
      *
      * @covers ::parse
      */
+    public function testIgnoreBlockList(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = <<<EOL
+        <ul>
+        <li>この拡張機能は</li>
+        <li>素晴らしい</li>
+        </ul>
+        
+        EOL;
+
+        $actual_text = <<<EOL
+        - この拡張機能は
+        - 素晴らしい
+        EOL;
+
+        $actual = $converter->convert($actual_text)->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
     public function testMergeInlineLink(): void
     {
         $environment = new Environment($this::DEFAULT_RULE);
