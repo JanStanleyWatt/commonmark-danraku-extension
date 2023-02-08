@@ -25,6 +25,9 @@
         "phpunit/phpunit": "^9.5",
         "friendsofphp/php-cs-fixer": "^3.14"
     },
+    "scripts": {
+        "test": "./vendor/bin/phpunit --color test"
+    },
     "autoload": {
         "psr-4": {
             "JSW\\Danraku\\": "src/"
