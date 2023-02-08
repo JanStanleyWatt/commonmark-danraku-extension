@@ -234,6 +234,31 @@ class DanrakuJisageTest extends TestCase
      *
      * @covers ::parse
      */
+    public function testIgnoreBlockQuote(): void
+    {
+        $environment = new Environment($this::DEFAULT_RULE);
+
+        $environment->addExtension(new CommonMarkCoreExtension())
+                    ->addExtension(new DanrakuExtension());
+
+        $converter = new MarkdownConverter($environment);
+
+        $expect = <<<EOL
+        <blockquote>
+        <p>この拡張機能は素晴らしい</p>
+        </blockquote>
+        
+        EOL;
+        $actual = $converter->convert('>この拡張機能は素晴らしい')->getContent();
+
+        $this->assertSame($expect, $actual);
+    }
+
+    /**
+     * @depends testDefaultJisageJapanese
+     *
+     * @covers ::parse
+     */
     public function testMergeInlineLink(): void
     {
         $environment = new Environment($this::DEFAULT_RULE);
@@ -243,10 +268,10 @@ class DanrakuJisageTest extends TestCase
 
         $converter = new MarkdownConverter($environment);
 
-        $expect_1 = '<p>　<a href="www.example.com">この拡張機能は素晴らしい</a></p>'."\n";
-        $actual_1 = $converter->convert('[この拡張機能は素晴らしい](www.example.com)')->getContent();
+        $expect = '<p>　<a href="www.example.com">この拡張機能は素晴らしい</a></p>'."\n";
+        $actual = $converter->convert('[この拡張機能は素晴らしい](www.example.com)')->getContent();
 
-        $this->assertSame($expect_1, $actual_1);
+        $this->assertSame($expect, $actual);
     }
 
     /**
