@@ -33,7 +33,7 @@ use PHPUnit\Framework\TestCase;
  * @group jisage
  * @group gfm
  */
-final class DanrakuAlignmentGFMExtension extends TestCase
+final class DanrakuAlignmentGFMExtensionTest extends TestCase
 {
     private MarkdownConverter $converter;
 
@@ -66,7 +66,7 @@ final class DanrakuAlignmentGFMExtension extends TestCase
     {
         $expect = '<p>　<a href="https://example.com">https://example.com</a> にもあるとおり、この拡張機能は素晴らしい</p>'."\n";
         $actual_text = <<<EOL
-        https://example.com にもあるとおり、この拡張機能は素晴らしい        
+        https://example.com にもあるとおり、この拡張機能は素晴らしい
         EOL;
 
         $actual = $this->converter->convert($actual_text)->getContent();
@@ -122,7 +122,7 @@ final class DanrakuAlignmentGFMExtension extends TestCase
         </tr>
         </tbody>
         </table>
-        
+
         EOL;
         $actual_text = <<<EOL
         名称             |説明 
@@ -145,7 +145,7 @@ final class DanrakuAlignmentGFMExtension extends TestCase
         <li><input checked="" disabled="" type="checkbox">拡張機能の機能を実装する</li>
         <li><input disabled="" type="checkbox">拡張機能のテストを書く</li>
         </ul>
-        
+
         EOL;
         $actual_text = <<<EOL
         - [x]拡張機能の機能を実装する
