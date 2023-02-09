@@ -32,7 +32,7 @@ use PHPUnit\Framework\TestCase;
  * @group unit
  * @group jisage
  */
-class DanrakuJisageTest extends TestCase
+final class DanrakuJisageTest extends TestCase
 {
     private const DEFAULT_RULE = [
         'jisage' => [
@@ -40,7 +40,7 @@ class DanrakuJisageTest extends TestCase
             'ignore_dash' => true,
         ],
         'yakumono' => [
-            'spacing_yakumono' => true, 
+            'spacing_yakumono' => true,
             'byte_sensitive' => true,
         ],
     ];
