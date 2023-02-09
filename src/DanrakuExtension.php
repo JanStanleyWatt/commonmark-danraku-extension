@@ -27,7 +27,7 @@ use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\Config\ConfigurationBuilderInterface;
 use Nette\Schema\Expect;
 
-class DanrakuExtension implements ConfigurableExtensionInterface
+final class DanrakuExtension implements ConfigurableExtensionInterface
 {
     public function configureSchema(ConfigurationBuilderInterface $builder): void
     {
@@ -41,7 +41,7 @@ class DanrakuExtension implements ConfigurableExtensionInterface
                 'ignore_dash' => Expect::bool()->default(true),
             ])
         );
-        
+
         $builder->addSchema(
             'yakumono',
             Expect::structure([
@@ -56,7 +56,7 @@ class DanrakuExtension implements ConfigurableExtensionInterface
 
     public function register(EnvironmentBuilderInterface $environment): void
     {
-        //JisageParserの優先順位は160以上にすること(BacktickParserとの兼ね合いのため)
+        // JisageParserの優先順位は160以上にすること(BacktickParserとの兼ね合いのため)
         $environment->addInlineParser(new JisageParser(), 160)
                     ->addInlineParser(new YakumonoParser());
     }

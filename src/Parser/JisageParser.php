@@ -32,7 +32,7 @@ use League\Config\ConfigurationInterface;
 /**
  * 段落処理のメインパーサ。処理の優先順位は160以上にすること(BacktickParserとの兼ね合いのため).
  */
-class JisageParser implements InlineParserInterface, ConfigurationAwareInterface
+final class JisageParser implements InlineParserInterface, ConfigurationAwareInterface
 {
     private ConfigurationInterface $config;
 
