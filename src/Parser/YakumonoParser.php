@@ -27,7 +27,7 @@ use League\CommonMark\Parser\InlineParserContext;
 use League\Config\ConfigurationAwareInterface;
 use League\Config\ConfigurationInterface;
 
-class YakumonoParser implements InlineParserInterface, ConfigurationAwareInterface
+final class YakumonoParser implements InlineParserInterface, ConfigurationAwareInterface
 {
     private $config;
 
