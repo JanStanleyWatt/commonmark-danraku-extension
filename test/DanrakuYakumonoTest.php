@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace JSW\Test;
+namespace JSW\Tests;
 
 use JSW\Danraku\DanrakuExtension;
 use League\CommonMark\Environment\Environment;
@@ -32,7 +32,7 @@ use PHPUnit\Framework\TestCase;
  * @group unit
  * @group yakumono
  */
-final class DanrakuYakumonoTest extends TestCase
+final class DanrakuYakumonoTests extends TestCase
 {
     private const DEFAULT_RULE = [
         'jisage' => [

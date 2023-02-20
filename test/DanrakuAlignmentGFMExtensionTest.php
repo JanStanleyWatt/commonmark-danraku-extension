@@ -18,7 +18,7 @@
 
 declare(strict_types=1);
 
-namespace JSW\Test;
+namespace JSW\Tests;
 
 use JSW\Danraku\DanrakuExtension;
 use League\CommonMark\Environment\Environment;
@@ -33,7 +33,7 @@ use PHPUnit\Framework\TestCase;
  * @group jisage
  * @group gfm
  */
-final class DanrakuAlignmentGFMExtensionTest extends TestCase
+final class DanrakuAlignmentGFMExtensionTests extends TestCase
 {
     private MarkdownConverter $converter;
 
