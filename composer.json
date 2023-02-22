@@ -16,7 +16,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/JanStanleyWatt/commonmark-danraku-extension/issues"
+        "issues": "https://github.com/JanStanleyWatt/commonmark-danraku-extension/issues",
+        "source": "https://github.com/JanStanleyWatt/commonmark-danraku-extension"
     },
     "license": "Apache-2.0",
     "readme": "README.md",
