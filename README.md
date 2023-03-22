@@ -3,8 +3,8 @@
 
 自動で段落の頭に全角スペースを入れてくれたり、区切り約物の直後に全角スペースを入れてくれる[League/CommonMark](https://commonmark.thephpleague.com/)拡張機能。
 
-## Install
-`$ composer require whojinn/danraku`
+## Installation
+`$ composer require jsw/commonmark-danraku-extension`
 
 ## Usage
 ```php
